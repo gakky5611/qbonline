@@ -1,0 +1,369 @@
+-- MySQL dump 10.13  Distrib 8.0.12, for osx10.14 (x86_64)
+--
+-- Host: localhost    Database: django_hello
+-- ------------------------------------------------------
+-- Server version	8.0.12
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+ SET NAMES utf8mb4 ;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `auth_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `auth_group_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `auth_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add question',1,'add_question'),(2,'Can change question',1,'change_question'),(3,'Can delete question',1,'delete_question'),(4,'Can view question',1,'view_question'),(5,'Can add select history',2,'add_selecthistory'),(6,'Can change select history',2,'change_selecthistory'),(7,'Can delete select history',2,'delete_selecthistory'),(8,'Can view select history',2,'view_selecthistory'),(9,'Can add log entry',3,'add_logentry'),(10,'Can change log entry',3,'change_logentry'),(11,'Can delete log entry',3,'delete_logentry'),(12,'Can view log entry',3,'view_logentry'),(13,'Can add permission',4,'add_permission'),(14,'Can change permission',4,'change_permission'),(15,'Can delete permission',4,'delete_permission'),(16,'Can view permission',4,'view_permission'),(17,'Can add group',5,'add_group'),(18,'Can change group',5,'change_group'),(19,'Can delete group',5,'delete_group'),(20,'Can view group',5,'view_group'),(21,'Can add content type',6,'add_contenttype'),(22,'Can change content type',6,'change_contenttype'),(23,'Can delete content type',6,'delete_contenttype'),(24,'Can view content type',6,'view_contenttype'),(25,'Can add session',7,'add_session'),(26,'Can change session',7,'change_session'),(27,'Can delete session',7,'delete_session'),(28,'Can view session',7,'view_session'),(29,'Can add user',8,'add_customuser'),(30,'Can change user',8,'change_customuser'),(31,'Can delete user',8,'delete_customuser'),(32,'Can view user',8,'view_customuser');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `django_admin_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint(5) unsigned NOT NULL,
+  `change_message` longtext NOT NULL,
+  `content_type_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_users_customuser_id` (`user_id`),
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_users_customuser_id` FOREIGN KEY (`user_id`) REFERENCES `users_customuser` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `django_content_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (3,'admin','logentry'),(5,'auth','group'),(4,'auth','permission'),(6,'contenttypes','contenttype'),(1,'polls','question'),(2,'polls','selecthistory'),(7,'sessions','session'),(8,'users','customuser');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `django_migrations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_migrations`
+--
+
+LOCK TABLES `django_migrations` WRITE;
+/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2018-11-25 02:39:24.692231'),(2,'contenttypes','0002_remove_content_type_name','2018-11-25 02:39:24.721157'),(3,'auth','0001_initial','2018-11-25 02:39:24.815948'),(4,'auth','0002_alter_permission_name_max_length','2018-11-25 02:39:24.837212'),(5,'auth','0003_alter_user_email_max_length','2018-11-25 02:39:24.842783'),(6,'auth','0004_alter_user_username_opts','2018-11-25 02:39:24.847880'),(7,'auth','0005_alter_user_last_login_null','2018-11-25 02:39:24.853093'),(8,'auth','0006_require_contenttypes_0002','2018-11-25 02:39:24.856175'),(9,'auth','0007_alter_validators_add_error_messages','2018-11-25 02:39:24.861881'),(10,'auth','0008_alter_user_username_max_length','2018-11-25 02:39:24.868260'),(11,'auth','0009_alter_user_last_name_max_length','2018-11-25 02:39:24.873995'),(12,'users','0001_initial','2018-11-25 02:39:24.985941'),(13,'admin','0001_initial','2018-11-25 02:39:25.051497'),(14,'admin','0002_logentry_remove_auto_add','2018-11-25 02:39:25.058394'),(15,'admin','0003_logentry_add_action_flag_choices','2018-11-25 02:39:25.066511'),(16,'polls','0001_initial','2018-11-25 02:39:25.118502'),(17,'polls','0002_selecthistory_user','2018-11-25 02:39:25.156250'),(18,'sessions','0001_initial','2018-11-25 02:39:25.172951'),(19,'polls','0003_remove_selecthistory_q_id','2018-11-25 03:54:54.105944');
+/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('015se91jl4bo0od96n292bpe27qo60cu','OGJiMGUwN2M1M2ZiNjZkYzAzM2EyYjdhYTBhYTY4NDRjYzA4MzgxMjp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzNDIyYzZhMGM2M2NhYjUwYjdmOTE2ZDlkYzdlNjRiMzVkNzNhYmZiIiwiaW5kZXhfbnVtIjoxMH0=','2018-12-09 11:01:50.849646');
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `polls_question`
+--
+
+DROP TABLE IF EXISTS `polls_question`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `polls_question` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `question_text` varchar(20) NOT NULL,
+  `pub_date` datetime(6) DEFAULT NULL,
+  `question_sentence` longtext NOT NULL,
+  `question_picture` varchar(100) DEFAULT NULL,
+  `question_choices` varchar(505) NOT NULL,
+  `question_answers` varchar(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `polls_question`
+--
+
+LOCK TABLES `polls_question` WRITE;
+/*!40000 ALTER TABLE `polls_question` DISABLE KEYS */;
+INSERT INTO `polls_question` VALUES (1,'','2018-11-25 02:42:55.041120','31歳の初産婦．骨盤位で選択的帝王切開を受けるため妊娠38週に入院した．手術室で静脈路確保後に側臥位で脊髄くも膜下麻酔を施行された．皮膚切開予定部位の消毒のため仰臥位となったところ，3分後に悪心を訴えた．意識は清明．呼吸数18/分．脈拍96/分，整．血圧86/56mmHg．SpO2 98％（room air）．胎児心拍数120/分．\r\n輸液速度を速めるのと同時に行うのはどれか．','','気管挿管,笑気の吸入,半坐位への体位変換,アドレナリンの静注,患者左側方向への子宮の用手的移動','5'),(2,'','2018-11-25 02:43:54.035900','児頭の固定を妨げるのはどれか．2つ選べ．','','狭骨盤,過長臍帯,頸部筋腫,前置血管,羊水過少症','1,3'),(3,'','2018-11-25 02:44:40.476276','臍帯脱出を起こしやすいのはどれか．','','足位,微弱陣痛,低在横定位,不正軸進入,羊水過少症','1'),(4,'','2018-11-25 04:02:18.169975','37歳の1回経妊0回経産婦．妊娠35週0日．昨夜から胎動の減少を自覚し来院した．これまでの妊娠経過は順調であった．身長160cm，体重56kg（非妊時52kg）．血圧110/68mmHg．尿検査：蛋白（－），糖（－）．子宮底長28cm，腹囲85cm．Leopold診察法では，第1頭位であった．胎児心拍は136/分であった．両下肢に浮腫を認めない．超音波検査を行うことにした．\r\n注意して観察すべき項目はどれか．2つ選べ．','','羊水量,胎盤の位置,胎児推定体重,子宮壁の厚さ,胎児後頸部浮腫','1,3'),(5,'','2018-11-25 07:16:55.031879','42歳の初産婦．妊娠38週5日に規則的子宮収縮を訴え来院し，陣痛発来と診断され入院となった．その後，鉗子分娩で3,200gの女児を娩出した．頸管裂傷を認め縫合したが，非凝固性の出血が持続し，分娩後30分で出血量は1,500mLを超えている．顔面は蒼白で発汗を認める．意識レベルはJCSⅠ-1．身長158cm，体重62kg．体温37.2℃．脈拍128/分，整．血圧78/48mmHg．子宮底は臍上3cmに触知し子宮収縮は不良であった．血液所見：赤血球330万，Hb 8.9g/dL，Ht 27％，白血球12,200，血小板9.2万，PT 30秒（基準10～14），血漿フィブリノゲン50mg/dL（基準200～400），血清FDP 135μg/mL（基準10以下），Dダイマー80μg/mL（基準1.0以下）．\r\n治療に用いる製剤の組合せとして適切なのはどれか．','','血漿分画製剤と新鮮凍結血漿,血漿分画製剤と濃厚血小板,赤血球濃厚液と新鮮凍結血漿,赤血球濃厚液と濃厚血小板','3'),(6,'','2018-11-25 07:18:12.836049','36歳の初産婦．妊娠38週3日に陣痛発来のため入院した．これまでの妊娠経過で異常を認めていなかった．血圧128/68mmHg．児は頭位．内診所見で子宮口は4cm開大．胎児心拍数陣痛図で5分周期の子宮収縮を認め，胎児心拍数波形に異常を認めない．入院4時間後，陣痛は2分間隔となった．内診で子宮口は9cm開大，内診時に自然破水した．胎児心拍数陣痛図で胎児心拍数基線は155/分で正常な基線細変動を認め，一過性徐脈を認めない．さらに30分後に強い子宮収縮があり，胎児心拍数が60/分の徐脈となって回復しない．\r\n胎児徐脈の原因として考えられるのはどれか．3つ選べ．','','臍帯脱出,子宮破裂,羊水塞栓症,絨毛膜羊膜炎,HELLP症候群','1,2,3'),(7,'','2018-11-25 07:26:54.958982','29歳の初妊婦．妊娠35週．胎動減少を主訴に来院した．妊娠34週まで特に異常を指摘されていない．数日前から胎動が少ないような気がするため受診した．腹痛の自覚はない．身長162cm，体重64kg（非妊時57kg）．体温36.5℃．脈拍84/分，整．血圧120/78mmHg．子宮底長32cm，腹囲87cm．下腿に浮腫を認めない．ノンストレステスト〈NST〉実施時の胎児心拍数陣痛図を次に示す．\r\n今後の方針として適切なのはどれか．','images/109I042.jpg','帰宅させる,分娩誘発を行う,帝王切開を行う,臍帯穿刺により胎児血液検査を行う,BPS〈biophysical profile score〉を評価する','5'),(8,'','2018-11-25 07:28:13.670097','35歳の初妊婦．妊娠40週4日．陣痛発来のため入院した．妊娠39週時の妊婦健康診査では胎児推定体重は2,450gで，羊水ポケットは3cmと測定された．身長161cm，体重61kg（非妊時52kg）．内診所見は，児頭は骨盤入口部にあり，展退度50％，子宮口は3cm開大，頸管の硬度はやや軟，児頭下降度SP－2cm．その他に異常所見を認めない．陣痛はほぼ10分周期である．その後，陣痛は次第に増強し，入院後7時間経過した時点で破水し，羊水混濁を認めた．内診所見は子宮口は10cm開大，児頭下降度SP＋1cmとなった．その時の胎児心拍数陣痛図（A）と，さらに30分後の胎児心拍数陣痛図（B）とを次に示す．内診所見は児頭下降度SP＋3cmで，矢状縫合は骨盤前後径に一致し小泉門を恥骨後面に触れる．\r\n対応として適切なのはどれか．','images/108G053B.jpg','経過観察,吸引分娩,体位変換,帝王切開術,子宮収縮抑制薬投与','2'),(9,'','2018-11-25 07:29:02.357037','33歳の1回経産婦．妊娠38週2日に自然陣痛が発来し，3時間後に3,150gの男児を経腟分娩した．Apgarスコアは9点（1分），10点（5分）であった．分娩10分後に胎盤が自然娩出し，子宮底は臍上4cmに触れる．下腹部痛はないが胎盤娩出直後から中等量の出血が持続している．母体脈拍数は84/分で血圧は126/68mmHgである．母体ヘモグロビン値は9.8g/dLである．\r\n対応として適切なのはどれか．','','硫酸マグネシウム投与,プロスタグランジンF2α投与,輸血,子宮動脈塞栓術,子宮全摘術','2'),(10,'','2018-11-25 11:00:30.647594','微弱陣痛について正しいのはどれか．2つ選べ．','','陣痛の頻度，持続，強さのうち強さの減弱をいう,子宮の過伸展は続発性微弱陣痛の原因となる,回旋異常があれば児の状態にかかわらず帝王切開術を行う,子宮口開大3cmで胎児に異常がなければ経過観察する,分娩手段を決定するためには陣痛促進が必要である．','4,5');
+/*!40000 ALTER TABLE `polls_question` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `polls_selecthistory`
+--
+
+DROP TABLE IF EXISTS `polls_selecthistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `polls_selecthistory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `select_date` datetime(6) NOT NULL,
+  `select_text` varchar(30) NOT NULL,
+  `latest_solve_state` tinyint(1) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `polls_selecthistory_question_id_3d881cd4_fk_polls_question_id` (`question_id`),
+  KEY `polls_selecthistory_user_id_75f178a7_fk_users_customuser_id` (`user_id`),
+  CONSTRAINT `polls_selecthistory_question_id_3d881cd4_fk_polls_question_id` FOREIGN KEY (`question_id`) REFERENCES `polls_question` (`id`),
+  CONSTRAINT `polls_selecthistory_user_id_75f178a7_fk_users_customuser_id` FOREIGN KEY (`user_id`) REFERENCES `users_customuser` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `polls_selecthistory`
+--
+
+LOCK TABLES `polls_selecthistory` WRITE;
+/*!40000 ALTER TABLE `polls_selecthistory` DISABLE KEYS */;
+INSERT INTO `polls_selecthistory` VALUES (1,'2018-11-25 02:46:15.734158','5',0,1,1),(2,'2018-11-25 02:46:34.801612','1,3',0,2,1),(3,'2018-11-25 02:46:42.777691','5',0,3,1),(4,'2018-11-25 03:51:42.484209','1,3',1,3,1),(5,'2018-11-25 05:06:38.376473','2,4',1,2,1),(6,'2018-11-25 05:16:54.062044','5',1,3,1),(7,'2018-11-25 05:17:20.747171','1',1,3,1),(8,'2018-11-25 06:17:37.976444','5',1,1,1);
+/*!40000 ALTER TABLE `polls_selecthistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users_customuser`
+--
+
+DROP TABLE IF EXISTS `users_customuser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `users_customuser` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users_customuser`
+--
+
+LOCK TABLES `users_customuser` WRITE;
+/*!40000 ALTER TABLE `users_customuser` DISABLE KEYS */;
+INSERT INTO `users_customuser` VALUES (1,'pbkdf2_sha256$120000$mZdMH7DCbk7y$++3rpKRWlViUreVDChWKfxDbGNGF5qWuQ1C5Iqn7RvA=','2018-11-25 02:40:32.015799',0,'shotakun','','','',0,1,'2018-11-25 02:40:16.920189'),(2,'pbkdf2_sha256$120000$ZomyDB3xoSBQ$gKIAfql9EG3V8fT8gKLNsQ6HJ71t4etPqNbJr8F9hgI=','2018-11-25 09:13:44.387804',0,'aaaaa','','','',0,1,'2018-11-25 09:08:16.027626');
+/*!40000 ALTER TABLE `users_customuser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users_customuser_groups`
+--
+
+DROP TABLE IF EXISTS `users_customuser_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `users_customuser_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customuser_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_customuser_groups_customuser_id_group_id_76b619e3_uniq` (`customuser_id`,`group_id`),
+  KEY `users_customuser_groups_group_id_01390b14_fk_auth_group_id` (`group_id`),
+  CONSTRAINT `users_customuser_gro_customuser_id_958147bf_fk_users_cus` FOREIGN KEY (`customuser_id`) REFERENCES `users_customuser` (`id`),
+  CONSTRAINT `users_customuser_groups_group_id_01390b14_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users_customuser_groups`
+--
+
+LOCK TABLES `users_customuser_groups` WRITE;
+/*!40000 ALTER TABLE `users_customuser_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users_customuser_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users_customuser_user_permissions`
+--
+
+DROP TABLE IF EXISTS `users_customuser_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `users_customuser_user_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customuser_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_customuser_user_pe_customuser_id_permission_7a7debf6_uniq` (`customuser_id`,`permission_id`),
+  KEY `users_customuser_use_permission_id_baaa2f74_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `users_customuser_use_customuser_id_5771478b_fk_users_cus` FOREIGN KEY (`customuser_id`) REFERENCES `users_customuser` (`id`),
+  CONSTRAINT `users_customuser_use_permission_id_baaa2f74_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users_customuser_user_permissions`
+--
+
+LOCK TABLES `users_customuser_user_permissions` WRITE;
+/*!40000 ALTER TABLE `users_customuser_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users_customuser_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-11-25 22:21:51
