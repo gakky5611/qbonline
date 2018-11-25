@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+{%  if latest_question_list %}
+    <div class="form-group">
+    {% for question in latest_question_list %}
+    <label class="checkbox col-md-5 offset-md-2">
+        <input type="checkbox" data-toggle="checkbox" {% if question.latest_solve_state %} checked {% endif %}><a href={% url 'polls:detail' question.id %}>{{ question.pub_date }}</a>
+{% if question.latest_solve_state %}{% if question.solver %} <span class="fui-check-circle" style="color:green"></span>{% else %}<span class="fui-cross-circle" style="color:red"></span>
+    {% endif %}{% endif %}
+    </label>
+    {% endfor %}
+    </div>
+{% else %}
+    <p class="text-warning">No polls are available.</p>
+{% endif %}
+ <div class="alert-dark">あなたは{{ total_num }}問解いて、{{ correct_num }}問正解しました。</div>
+{% endblock %}
+

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header text-center">OB ONLINE 問題登録</div>
+<div class="card-body">
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<table class="table">
+    <tr>
+        <td>{{ form.question_sentence.label_tag }}</td>
+        <td>{{ form.question_sentence | add_class:"form-control"}}</td>
+    </tr>
+    <tr>
+        <td>{{ form.question_picture.label_tag }}</td>
+        <td>{{ form.question_picture | add_class:"form-control"}}</td>
+    </tr>
+    <tr>
+        <td> {{ form.question_choices.label_tag }}</td>
+        <td>{{ form.question_choices | add_class:"form-control" }}</td>
+    </tr>
+    <tr><td>{{ form.question_answers.label_tag }}</td>
+        <td>{{ form.question_answers | add_class:"form-control"}}</td>
+    </tr>
+
+</table>
+<input type="submit" value="register" class="btn btn-light btn-block"/>
+</form>
+</div>
+</div>
+{% endblock %}

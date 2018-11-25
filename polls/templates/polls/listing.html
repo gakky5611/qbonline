@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+{% for u in users%}
+    <h4>{{ u.username }}</h4>
+    <ul>
+    {% for s in u.selecthistory_set.all %}
+    <li>id={{s.question.id}}, choice={{ s.select_text }},kotae={{ s.question.question_answers }}</li>
+    {% endfor %}
+    </ul>
+{% endfor %}
+{% endblock %}

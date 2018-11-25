@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+
+{% if next %}
+    {% if user.is_authenticated %}
+        <p>あなたはアクセスする権限がありません。</p>
+    {% else %}
+        <p>ログインしてください。</p>
+    {% endif %}
+{% endif %}
+<div class="card">
+<div class="card-header"><h4>ログイン画面</h4></div>
+<div class="card-body">
+<form method="post" action="{% url 'login' %}" class="">
+{% csrf_token %}
+
+    <div class="form-group">
+        {% if form.errors %}
+        <div class="text-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+    <label for="{{ form.username.id_for_label }}" class="">
+            {{ form.username.label_tag }}</label>
+        {% render_field form.username class="form-control" placeholder=form.username.label%}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.password.id_for_label }}" class="">
+            {{ form.password.label_tag }}</label>
+        {% render_field form.password class="form-control" placeholder=form.password.label%}
+    </div>
+
+    <input type="submit" value="login" class="btn btn-dark col-md-3">
+    <a href= "{% url 'users:signup' %}">Sign up</a>
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+</div>
+</div>
+{% endblock %}
