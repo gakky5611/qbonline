@@ -1,5 +1,10 @@
 .card {
-    width:44rem;
-    margin: 0 auto;
+    width:40rem;
+    margin:0 auto;
+
+}
+div#collapse_card{
+    width:48rem;
+    margin:0 auto;
 
 }

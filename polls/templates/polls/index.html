@@ -4,19 +4,98 @@
 
 {% block content %}
 
-{%  if latest_question_list %}
-    <div class="form-group">
-    {% for question in latest_question_list %}
-    <label class="checkbox col-md-5 offset-md-2">
-        <input type="checkbox" data-toggle="checkbox" {% if question.latest_solve_state %} checked {% endif %}><a href={% url 'polls:detail' question.id %}>{{ question.pub_date }}</a>
-{% if question.latest_solve_state %}{% if question.solver %} <span class="fui-check-circle" style="color:green"></span>{% else %}<span class="fui-cross-circle" style="color:red"></span>
-    {% endif %}{% endif %}
-    </label>
-    {% endfor %}
-    </div>
-{% else %}
-    <p class="text-warning">No polls are available.</p>
-{% endif %}
- <div class="alert-dark">あなたは{{ total_num }}問解いて、{{ correct_num }}問正解しました。</div>
+ <div class="container">
+<script type="text/javascript">
+function onChange(){
+    document.getElementById("myform").submit();
+
+
+}
+
+
+</script>
+     <form action="{% url 'polls:index' %}" method="post" onchange="onChange()" id="myform">
+         {% csrf_token %}
+         <div class="row">
+         <div class="form-group">
+             <label for="selectbox1" class="control-label col-md-4">
+                 表示数
+                 <select name="num_index" class="form-control select select-primary" id="selectbox1">
+                     <optgroup label="表示問題数">
+                         <option value="5" {% if request.session.num_index == 5 %} selected{% else %} {% endif %} >5</option>
+                         <option value="10"{% if request.session.num_index == 10 %} selected{% else %}{% endif %} >10</option>
+                     </optgroup>
+                 </select>
+
+             </label>
+             <label for="selectbox2" class="control-label col-md-4">
+                 表示順
+                 <select name="order_state" class="form-control select select-primary" id="selectbox2">
+                     <optgroup label="表示順">
+                         <option value="new"{% if request.session.order_state == "new" %} selected {% else %} {% endif %}>新しい順</option>
+                         <option value="old"{% if request.session.order_state == "old" %} selected {% else %} {% endif %}>古い順</option>
+                     </optgroup>
+
+                 </select>
+             </label>
+         </div>
+
+         </div>
+     </form>
+
+
+    <form action="{% url 'polls:detail_list' 0 %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-hg">問題演習へGO!</button>
+
+        {% if latest_question_list %}
+            <div class="form-group col-md-6">
+                {% for question in latest_question_list %}
+
+                    <label for="checks{{ forloop.counter }}" class="checkbox col-md-5">
+                        <input type="checkbox" name="checks" data-toggle="checkbox" checked
+                               id="checks{{ forloop.counter }}" value="{{ question.id }}"><a
+                            href={% url 'polls:detail' question.id %}>{{ question.question_text }}</a>
+                        {% if question.latest_solve_state %}{% if question.solver %}
+                            <span class="fui-check-circle" style="color:green"></span>{% else %}
+                            <span class="fui-cross-circle" style="color:red"></span>
+                        {% endif %}{% else %} unsolved{% endif %}
+                    </label>
+
+                {% endfor %}
+            </div>
+            </form>
+
+
+
+        {% else %}
+            <div class="col-md-6">
+                <canvas id="graph">
+                </canvas>
+                <script type="text/javascript">
+
+                    var ctx = document.getElementById("graph");
+                    var data = {
+                        datasets: [
+                            {
+                                label: "score",
+                                fillColor: "rgba(220,220,220,0.2)",
+                                strokeColor: "rgba(220,220,220,0.2",
+                                data:{{ user_score_registrations }}
+
+
+                            }
+
+
+                        ]
+                    };
+
+                    var myGraph = new Chart(ctx).Line(data);
+
+
+                </script>
+            </div>
+            <p class="text-warning">No polls are available.</p>
+        {% endif %}
 {% endblock %}
 

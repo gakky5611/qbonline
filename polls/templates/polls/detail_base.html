@@ -1,63 +1,95 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
-
+{% load extra %}
 {% block content %}
-<div class="row">
-<div class="card" style="width: 44rem; margin: 0 auto;">
-<div class="card-header">{{ question.question_text }}</div>
-<div class="card-body">
+    <div class="row">
+        <div class="card" style="width: 44rem; margin: 0 auto;">
+            <div class="card-header">{{ title_text }}</div>
+            <div class="card-body">
 
-{% if error_message %}<p><strong>{{ error_messagge }}</strong></p>{% endif %}
+                {% if error_message %}<p><strong>{{ error_messagge }}</strong></p>{% endif %}
+
+                <form action="{% url 'polls:aggregate' questions.0.id %}" method="post" onsubmit="return set();">
+                    {% csrf_token %}
+                    {% for question in questions %}
+                        <div>
+                            {{ question.question_text }}
+                        </div>
+                        <div class="col-md-10 offset-md-1">
+                            {{ question.question_sentence }}
+
+                        </div>
+
+                        <div class="row">
+                        {% for pic in question.picture_set.all %}
+                            <div class="col-md-4">
+                                <h6 class="text-center">図{{ forloop.counter }}</h6>
+                                <a href="{{ pic.picture.url }}" data-lightbox="group" data-title="図{{ forloop.counter }}">
+                                    <img src="{{ pic.picture.url }}" width="250">
+                                </a>
+                            </div>
+                        {% endfor %}
+                        </div>
 
 
-<div id="vue_page">
-    <h1>{{ message }}</h1>
-</div>
-<div class="col-md-10 offset-md-1">
- {{ question.question_sentence }}
 
-</div>
-{% if question.question_picture %}
-    <div class="col-md-8 offset-md-2">
-    <a href="{{  question.question_picture.url}}">
-    <img src="{{ question.question_picture.url }}" width="250">
-    </a>
+                        <div class="btn-group-toggle btn-group-vertical col-md-8 offset-md-2 form-group"
+                             data-toggle="checkbox">
+                            {% for choice in question.question_choices %}
+                                <label for="choice{{ question.id }}and{{ forloop.counter }}" class="checkbox btn btn-light">
+                                    <input data-toggle="checkbox" type="checkbox" name="choices{{ question.id }}"
+                                           id="choice{{ question.id }}and{{ forloop.counter }}"
+                                           value="{{ forloop.counter }}"
+                                           autocomplete="off"/>{{ forloop.counter }}.{{ choice }}
+                                </label>
+                            {% endfor %}
+                        </div>
+
+                    {% endfor %}
+                    <button type="submit" class="btn btn-dark btn-block col-md-6 offset-md-3" data-toggle="collapse"
+                            data-target="#answer
+" aria-expanded="false" aria-controls="answer">祈る
+                    </button>
+                    <input type="hidden" name="brother" id="bridge" value="" />
+                </form>
+
+            </div>
+<script type="text/javascript">
+
+function set() {
+   var element = document.getElementById("bridge");
+   element.value=1;
+   return true;
+}
+
+window.onload = function () {
+    {% if request.POST.brother %}
+    var info = {{request.POST.brother}};
+    {% else %}
+    var info = 0
+    {% endif %}
+
+    if(info　==　1) {
+        var element = document.getElementById("answer");
+        element.classList.add("show");
+    }
+}
+</script>
+            <div class="collapse" id="answer">
+                <div class="card card-body" style="width: 36rem; margin: 0 auto;">
+                    {% for question in questions %}
+                    <p>答え: {{ question.question_answers }}</p>
+                    <p>あなたの答え:{% if selected_answer %}{{ selected_answer|index:forloop.counter}}{% endif %}</p>
+                        <p>{{ question.question_commentary }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% block qpage %}{% endblock %}
+
+
+            <div class="card-footer">登録日{{ questions.0.pub_date }}</div>
+        </div>
     </div>
-{% endif %}
-
-<form action="{% url 'polls:aggregate' question.id %}" method="post">
-{% csrf_token %}
-    <div class="btn-group-toggle btn-group-vertical col-md-8 offset-md-2 form-group" data-toggle="checkbox">
-    {% for choice in question.question_choices %}
-        <label for="choice{{ forloop.counter }}" class="checkbox btn btn-light">
-                <input data-toggle="checkbox" type="checkbox" name="choices" id="choice{{ forloop.counter }}"
-                       value="{{ forloop.counter }}"  autocomplete="off"/>{{ forloop.counter}}.{{ choice }}
-        </label>
-    {% endfor %}
-    </div>
-    <button type="button" class="btn btn-dark btn-block col-md-6 offset-md-3" data-toggle="collapse" data-target="#answer
-" aria-expanded="false" aria-controls="answer">祈る</button>
-
-</form>
-
-</div>
-<div class ="collapse" id="answer">
-    <div class="card card-body" style="width: 36rem; margin: 0 auto;">
-        <p>答え:</p>
-        <p>あなたの答え:</p>
-    </div>
-</div>
-{% block  %}
-<div class="pagination pagination-success text-center">
-    <a href="{% if question.id|add:-1 >= 1 %}{% url 'polls:detail' question.id|add:-1 %}{% else %}{% url 'polls:index' %}{% endif %}" class="btn btn-success previous">前</a>
-    <ul>
-        {% for i in dummy_text %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ forloop.counter}}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{% if question.id|add:1 <= q_num %}{% url 'polls:detail' question.id|add:1 %}{% else %}{% url 'polls:index' %}{% endif %}" class="btn btn-success next">次</a>
-</div>
-<div class="card-footer">ほっと一息つけるような一言</div>
-</div>
-</div>
 {% endblock %}
+
