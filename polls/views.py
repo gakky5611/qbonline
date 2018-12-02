@@ -182,6 +182,7 @@ class DetailListView(LoginRequiredMixin, generic.ListView):
         return self.render_to_response(context)
 
     def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
         if not kwargs["active_id"] == 0:
             q = Question.objects.get(pk=kwargs["active_id"])
             questions = Question.objects.filter(question_series=q.question_text)
@@ -196,7 +197,6 @@ class DetailListView(LoginRequiredMixin, generic.ListView):
                        "title_text": title}
             return self.render_to_response(context)
 
-        self.object_list = self.get_queryset()
         id_list = []
         for obj in self.object_list:
             id_list.append(obj.id)
@@ -214,7 +214,7 @@ class DetailListView(LoginRequiredMixin, generic.ListView):
                     'class_name': self.__class__.__name__,
                 })
         context = self.get_context_data(**kwargs)
-        return self.render_to_resopnse(context)
+        return self.render_to_response(context)
 
 
 
