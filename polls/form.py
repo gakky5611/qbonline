@@ -19,7 +19,7 @@ class MyForm(forms.ModelForm):
             print(self.instance.question_series)
         else:
             if self.data["question_series"] != self.data["question_text"]:
-                self.isntance.question_sub = 1
+                self.instance.question_sub = 1
         self.instance.save()
 
 
