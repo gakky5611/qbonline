@@ -235,7 +235,13 @@ class RegisterView(LoginRequiredMixin, FormView):
 
 @login_required
 def scoreview(request):
-    context = {"users": CustomUser.objects.all()}
+    qlist =Question.objects.all()
+    for q in qlist:
+        wrong_answers = q.selecthistory_set.filter(select_status=0)
+        q.wrong_usernames =[]
+        for w in wrong_answers:
+            q.wrong_usernames += (w.user.username, w.select_text)
+    context = {"qlist": qlist}
     return render(request, 'polls/listing.html', context)
 
 

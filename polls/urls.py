@@ -9,6 +9,6 @@ urlpatterns = [
     path('<int:pk>/',views.DetailView.as_view(), name='detail'),
     path('<int:pk>/results', views.ResultsView.as_view(), name='results'),
     path('<int:question_id>/aggregate/', views.aggregate, name='aggregate'),
-    path('score',views.scoreview,name="score"),
+    path('score',views.scoreview, name="score"),
     path('<int:question_id>/<int:active_id>/detail_list', views.DetailListView.as_view(), name="detail_list"),
 ]

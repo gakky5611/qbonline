@@ -3,11 +3,11 @@
 
 {% block content %}
 
-{% for u in users%}
-    <h4>{{ u.username }}</h4>
+{% for q in qlist%}
+    <h4>{{ q.question_text}}</h4>
     <ul>
-    {% for s in u.selecthistory_set.all %}
-    <li>id={{s.question.id}}, choice={{ s.select_text }},kotae={{ s.question.question_answers }}</li>
+    {% for s in q.wrong_usernames %}
+    <li>username={{s.0}}, choice={{ s.1 }}, seikai={{ q.question_answers }}</li>
     {% endfor %}
     </ul>
 {% endfor %}
