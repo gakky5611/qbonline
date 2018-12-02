@@ -182,20 +182,20 @@ class DetailListView(LoginRequiredMixin, generic.ListView):
         return self.render_to_response(context)
 
     def get(self, request, *args, **kwargs):
-        q = Question.objects.get(pk=kwargs["active_id"])
-        questions = Question.objects.filter(question_series=q.question_text)
-        if len(questions) > 1:
-            match = re.findall(r'[0-9]+', questions.reverse().first().question_text)
+        if kwargs["active_id"] != 0:
+            q = Question.objects.get(pk=kwargs["active_id"])
+            questions = Question.objects.filter(question_series=q.question_text)
+            if len(questions) > 1:
+                match = re.findall(r'[0-9]+', questions.reverse().first().question_text)
+                title = questions[0].question_text + "-" + match[-1]
+            else:
+                title = questions[0].question_text
+            context = {"questions": questions,
+                       "question_list": q,
+                       "active_index": 0,
+                       "title_text": title}
+            return self.render_to_response(context)
 
-            title = questions[0].question_text + "-" + match[-1]
-        else:
-            title = questions[0].question_text
-        context = {"questions": questions,
-                   "question_list": q,
-                   "active_index": 0,
-                   "title_text": title}
-        return self.render_to_response(context)
-"""
         self.object_list = self.get_queryset()
         id_list = []
         for obj in self.object_list:
@@ -213,7 +213,8 @@ class DetailListView(LoginRequiredMixin, generic.ListView):
                 raise Http404(_("Empty list and '%(class_name)s.allow_empty' is False.") % {
                     'class_name': self.__class__.__name__,
                 })
- """
+        context = self.get_context_data(**kwargs)
+        return self.render_to_resopnse(context)
 
 
 
@@ -276,7 +277,7 @@ def aggregate(request, question_id):
                                           select_status=0)
         except NullListException:
 
-            return render(request, 'polls/detail.html', {
+            return render(request, 'polls/detail_list.html', {
                 'questions': questions,
                 'question_list': q_list,
                 'error_message': "You didn't select a choice",
