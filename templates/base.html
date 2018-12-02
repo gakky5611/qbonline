@@ -4,27 +4,48 @@
 <html lang="ja-jp" xmlns="http://www.w3.org/1999/html">
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="{% static 'pseudo_qb/css/bootstrap.css' %}" />
-    <link rel="stylesheet" href="{% static 'pseudo_qb/css/style.css' %}" />
-    <link rel="stylesheet" href="{% static 'pseudo_qb/css/flat-ui.min.css' %}" />
-    <title>{% block title %}My amazing site{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'polls/css/bootstrap.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'polls/css/flat-ui.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'polls/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'polls/css/lightbox.css' %}">
+    <title>{% block title %}Esprit de l'escalier {% endblock %}</title>
 </head>
 
 <body>
 <div class="page-header">
     <h2>Libre QB ONLINE</h2>
 </div>
-<nav class="navbar navbar-default">
-    <a class="navbar-brand" href="#">TEST</a>
+<nav class="navbar navbar-default navbar-expand-md">
+    <a class="navbar-brand" href="{% url 'polls:index' %}">TOP</a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="#">解いた問題一覧</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">入門の方へ</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">寄付について</a>
+        </li>
+    </ul>
 
-<div class="nav-item"><strong>User:{{ user.username }}</strong></div>
+    <ul class="navbar-nav mr-1">
+        <li class="nav-item">
+            <strong>ユーザー名:{{ user.username }}</strong>
+        </li>
+    </ul>
+
 </nav>
     <div class="content container" id="content">
         {% block content %}{% endblock %}
     </div>
-<script src="{% static 'pseudo_qb/js/jquery-3.3.1.js' %}"></script>
-    <script src="{% static 'pseudo_qb/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'pseudo_qb/js/flat-ui.min.js' %}"></script>
-    <script src="{% static 'pseudo_qb/js/application.js' %}"></script>
+<script src="{% static 'polls/js/jquery-3.3.1.js' %}"></script>
+    <script src="{% static 'polls/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'polls/js/flat-ui.min.js' %}"></script>
+    <script src="{% static 'polls/js/application.js' %}"></script>
+    <script src="{% static 'polls/js/Chart.js'  %}"></script>
+    <script src="{% static 'polls/js/lightbox.js' %}"></script>
+
 </body>
 </html>

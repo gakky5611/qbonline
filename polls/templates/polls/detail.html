@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'polls/detail_base.html' %}
+
+
+{% block qpage %}
+
+<a href="{% url 'polls:index' %}" class="text-center">Topへ戻る</a>
+
+{% endblock %}
