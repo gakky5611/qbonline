@@ -6,7 +6,7 @@
     <a href= "{% if active_index == 0 %} {% url 'polls:index' %} {% else %}{% url 'polls:detail_list' active_index|add:-1 0%}{% endif %}" class="btn btn-success previous">前 </a>
     <ul>
         {% for q in question_list %}
-        <li {% if active_index == forloop.counter|add:-1 %}style="color:red"{% endif %}><a href="{% url 'polls:detail_list' forloop.counter|add:-1  q.id%}">{{ forloop.counter}}</a></li>
+        <li> <a href="{% url 'polls:detail_list' forloop.counter|add:-1  0%}" {% if active_index == forloop.counter|add:-1 %}style="color:red"{% endif %}>{{ forloop.counter}}</a></li>
         {% endfor %}
     </ul>
 
