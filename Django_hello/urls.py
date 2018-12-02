@@ -18,7 +18,6 @@ from django.urls import include, path
 from django.conf.urls.static import static
 from . import settings
 urlpatterns = [
-    path('pseudo_qb/', include('pseudo_qb.urls')),
     path('polls/', include('polls.urls')),
     path('users/',include('django.contrib.auth.urls')),
     path('users/',include('users.urls')),
