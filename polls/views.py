@@ -192,7 +192,7 @@ class DetailListView(LoginRequiredMixin, generic.ListView):
             else:
                 title = questions[0].question_text
             context = {"questions": questions,
-                       "question_list": q,
+                       "question_list": [q],
                        "active_index": 0,
                        "title_text": title}
             return self.render_to_response(context)
