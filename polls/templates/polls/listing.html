@@ -4,7 +4,7 @@
 {% block content %}
 
 {% for q in qlist%}
-    <h4>{{ q.question_text}}</h4>
+    <h4><a href="{% url 'polls:detail_list' 0 q.id %}">{{ q.question_text}}</a></h4>
     <ul>
     {% for s in q.wrong_usernames %}
     <li>username={{s.0}}, choice={{ s.1 }}, seikai={{ q.question_answers }}</li>

@@ -259,12 +259,12 @@ def aggregate(request, question_id):
     questions = Question.objects.filter(question_series=q.question_text)
     active_index = 0
     selected_list = []
-    q_list = []
+    q_list = Question.objects.none()
     if "active_index" in request.session:
         active_index = request.session["active_index"]
 
     for x in request.session["id_list"]:
-        q_list.append(Question.objects.get(pk=x))
+        q_list |= Question.objects.filter(pk=x)
     if len(questions) > 1:
         match = re.findall(r'[0-9]+', questions.reverse().first().question_text)
 
