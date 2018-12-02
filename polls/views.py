@@ -182,7 +182,7 @@ class DetailListView(LoginRequiredMixin, generic.ListView):
         return self.render_to_response(context)
 
     def get(self, request, *args, **kwargs):
-        if kwargs["active_id"] != 0:
+        if not kwargs["active_id"] == 0:
             q = Question.objects.get(pk=kwargs["active_id"])
             questions = Question.objects.filter(question_series=q.question_text)
             if len(questions) > 1:
