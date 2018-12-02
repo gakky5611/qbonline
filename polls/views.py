@@ -191,8 +191,7 @@ class DetailListView(LoginRequiredMixin, generic.ListView):
                 title = questions[0].question_text + "-" + match[-1]
             else:
                 title = questions[0].question_text
-            query = Question.objects.none()
-            query |= q
+            query = Question.objects.filter(pk=q.id)
             context = {"questions": questions,
                        "question_list": query,
                        "active_index": 0,
@@ -242,7 +241,7 @@ def scoreview(request):
         wrong_answers = q.selecthistory_set.filter(select_status=0)
         q.wrong_usernames =[]
         for w in wrong_answers:
-            q.wrong_usernames += (w.user.username, w.select_text)
+            q.wrong_usernames.append((w.user.username, w.select_text))
     print(q.wrong_usernames)
     context = {"qlist": qlist}
     return render(request, 'polls/listing.html', context)
