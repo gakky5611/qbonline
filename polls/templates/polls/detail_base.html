@@ -63,8 +63,8 @@ function set() {
 }
 
 window.onload = function () {
-    {% if request.POST.brother %}
-    var info = {{request.POST.brother}};
+    {% if applicationisValid == 1 %}
+    var info = 1;
     {% else %}
     var info = 0
     {% endif %}

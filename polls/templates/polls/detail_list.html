@@ -3,14 +3,14 @@
 {% block qpage %}
 
 <div class="pagination pagination-success text-center">
-    <a href= "{% if active_index == 0 %} {% url 'polls:index' %} {% else %}{% url 'polls:detail_list' active_index|add:-1 %}{% endif %}" class="btn btn-success previous">前 </a>
+    <a href= "{% if active_index == 0 %} {% url 'polls:index' %} {% else %}{% url 'polls:detail_list' active_index|add:-1 0%}{% endif %}" class="btn btn-success previous">前 </a>
     <ul>
         {% for q in question_list %}
-        <li><a href="{% url 'polls:detail_list' forloop.counter|add:-1  %}">{{ forloop.counter}}</a></li>
+        <li><a href="{% url 'polls:detail_list' forloop.counter|add:-1  0%}">{{ forloop.counter}}</a></li>
         {% endfor %}
     </ul>
 
-    <a href="{% if active_index == question_list.count|add:-1 %} {% url 'polls:index' %} {% else %}{% url 'polls:detail_list' active_index|add:1 %} {% endif %}"  class="btn btn-success next">次</a>
+    <a href="{% if active_index == question_list.count|add:-1 %} {% url 'polls:index' %} {% else %}{% url 'polls:detail_list' active_index|add:1 0%} {% endif %}"  class="btn btn-success next">次</a>
 </div>
 
 {% endblock %}

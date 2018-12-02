@@ -30,13 +30,14 @@ class IndexView(LoginRequiredMixin, generic.ListView):
         self.request.session["active_index"] = 0
         if "num_index" in self.request.session:
             num_index = int(self.request.session["num_index"])
-
         else:
-            num_index = 5
+            num_index = 10
+            self.request.session["num_index"] = num_index
         if "order_state" in self.request.session:
             order_state = self.request.session["order_state"]
         else:
             order_state = "new"
+            self.request.session["order_state"] = order_state
 
         if order_state == "new":
             q_list = Question.objects.filter(question_sub=0).order_by('-pub_date')[:num_index]
@@ -181,7 +182,20 @@ class DetailListView(LoginRequiredMixin, generic.ListView):
         return self.render_to_response(context)
 
     def get(self, request, *args, **kwargs):
+        q = Question.objects.get(pk=kwargs["active_id"])
+        questions = Question.objects.filter(question_series=q.question_text)
+        if len(questions) > 1:
+            match = re.findall(r'[0-9]+', questions.reverse().first().question_text)
 
+            title = questions[0].question_text + "-" + match[-1]
+        else:
+            title = questions[0].question_text
+        context = {"questions": questions,
+                   "question_list": q,
+                   "active_index": 0,
+                   "title_text": title}
+        return self.render_to_response(context)
+"""
         self.object_list = self.get_queryset()
         id_list = []
         for obj in self.object_list:
@@ -199,8 +213,8 @@ class DetailListView(LoginRequiredMixin, generic.ListView):
                 raise Http404(_("Empty list and '%(class_name)s.allow_empty' is False.") % {
                     'class_name': self.__class__.__name__,
                 })
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context)
+ """
+
 
 
 class RegisterView(LoginRequiredMixin, FormView):
@@ -235,9 +249,20 @@ def aggregate(request, question_id):
     user = request.user
     questions = Question.objects.filter(question_series=q.question_text)
     active_index = 0
-    selected_list =[]
+    selected_list = []
+    q_list = []
     if "active_index" in request.session:
         active_index = request.session["active_index"]
+
+    for x in request.session["id_list"]:
+        q_list.append(Question.objects.get(pk=x))
+    if len(questions) > 1:
+        match = re.findall(r'[0-9]+', questions.reverse().first().question_text)
+
+        title = questions[0].question_text + "-" + match[-1]
+    else:
+        title = questions[0].question_text
+
     for question in questions:
         try:
             selected_choice = request.POST.getlist('choices'+str(question.id))
@@ -249,11 +274,14 @@ def aggregate(request, question_id):
                                           select_text=selected_choice,
                                           user_id=user.id,
                                           select_status=0)
-
         except NullListException:
+
             return render(request, 'polls/detail.html', {
-                'question': question,
-                'error_message': "You didn't select a choice"
+                'questions': questions,
+                'question_list': q_list,
+                'error_message': "You didn't select a choice",
+                'title': title,
+                'active_index' : active_index
             })
         else:
             if question.question_answers == selected_choice:
@@ -263,18 +291,10 @@ def aggregate(request, question_id):
             user.selecthistory_set.add(selecthistory)
             question.selecthistory_set.add(selecthistory)
 
-            q_list = []
-    for x in request.session["id_list"]:
-        q_list.append(Question.objects.get(pk=x))
-    if len(questions) > 1:
-        match = re.findall(r'[0-9]+', questions.reverse().first().question_text)
-
-        title = questions[0].question_text + "-" + match[-1]
-    else:
-         title = questions[0].question_text
     return render(request, "polls/detail_list.html", {
         'questions': questions,
-        'question_list': list(q_list),
+        'question_list': q_list,
         'selected_answer': selected_list,
         "active_index": active_index,
-        "title_text": title})
+        "title_text": title,
+        "applicationisValid": 1})

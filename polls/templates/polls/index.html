@@ -44,18 +44,17 @@ function onChange(){
      </form>
 
 
-    <form action="{% url 'polls:detail_list' 0 %}" method="POST">
+    <form action="{% url 'polls:detail_list' 0 0 %}" method="POST">
         {% csrf_token %}
         <button type="submit" class="btn btn-hg">問題演習へGO!</button>
 
         {% if latest_question_list %}
             <div class="form-group col-md-6">
                 {% for question in latest_question_list %}
-
                     <label for="checks{{ forloop.counter }}" class="checkbox col-md-5">
                         <input type="checkbox" name="checks" data-toggle="checkbox" checked
                                id="checks{{ forloop.counter }}" value="{{ question.id }}"><a
-                            href={% url 'polls:detail' question.id %}>{{ question.question_text }}</a>
+                            href={% url 'polls:detail_list' 0 0%}>{{ question.question_text }}</a>
                         {% if question.latest_solve_state %}{% if question.solver %}
                             <span class="fui-check-circle" style="color:green"></span>{% else %}
                             <span class="fui-cross-circle" style="color:red"></span>
