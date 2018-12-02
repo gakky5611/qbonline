@@ -1,4 +1,4 @@
-#!/Users/itagakishota/PycharmProjects/Django_hello/venv/bin/python
+#!/home/shota/myproject/Remote/venv/bin/python3.6
 
 # -*- coding: utf-8 -*-
 import re
