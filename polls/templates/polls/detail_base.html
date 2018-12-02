@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="row">
+<div class="card" style="width: 44rem; margin: 0 auto;">
+<div class="card-header">{{ question.question_text }}</div>
+<div class="card-body">
+
+{% if error_message %}<p><strong>{{ error_messagge }}</strong></p>{% endif %}
+
+
+<div id="vue_page">
+    <h1>{{ message }}</h1>
+</div>
+<div class="col-md-10 offset-md-1">
+ {{ question.question_sentence }}
+
+</div>
+{% if question.question_picture %}
+    <div class="col-md-8 offset-md-2">
+    <a href="{{  question.question_picture.url}}">
+    <img src="{{ question.question_picture.url }}" width="250">
+    </a>
+    </div>
+{% endif %}
+
+<form action="{% url 'polls:aggregate' question.id %}" method="post">
+{% csrf_token %}
+    <div class="btn-group-toggle btn-group-vertical col-md-8 offset-md-2 form-group" data-toggle="checkbox">
+    {% for choice in question.question_choices %}
+        <label for="choice{{ forloop.counter }}" class="checkbox btn btn-light">
+                <input data-toggle="checkbox" type="checkbox" name="choices" id="choice{{ forloop.counter }}"
+                       value="{{ forloop.counter }}"  autocomplete="off"/>{{ forloop.counter}}.{{ choice }}
+        </label>
+    {% endfor %}
+    </div>
+    <button type="button" class="btn btn-dark btn-block col-md-6 offset-md-3" data-toggle="collapse" data-target="#answer
+" aria-expanded="false" aria-controls="answer">祈る</button>
+
+</form>
+
+</div>
+<div class ="collapse" id="answer">
+    <div class="card card-body" style="width: 36rem; margin: 0 auto;">
+        <p>答え:</p>
+        <p>あなたの答え:</p>
+    </div>
+</div>
+{% block  %}
+<div class="pagination pagination-success text-center">
+    <a href="{% if question.id|add:-1 >= 1 %}{% url 'polls:detail' question.id|add:-1 %}{% else %}{% url 'polls:index' %}{% endif %}" class="btn btn-success previous">前</a>
+    <ul>
+        {% for i in dummy_text %}
+        <li><a href="{% url 'polls:detail' question.id %}">{{ forloop.counter}}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% if question.id|add:1 <= q_num %}{% url 'polls:detail' question.id|add:1 %}{% else %}{% url 'polls:index' %}{% endif %}" class="btn btn-success next">次</a>
+</div>
+<div class="card-footer">ほっと一息つけるような一言</div>
+</div>
+</div>
+{% endblock %}
