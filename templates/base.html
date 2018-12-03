@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'polls/css/bootstrap.css' %}" />
     <link rel="stylesheet" href="{% static 'polls/css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'polls/css/flat-ui.min.css' %}" />
-    <title>{% block title %}My amazing site{% endblock %}</title>
+    <title>{% block title %}L' esprit d'escalier{% endblock %}</title>
 
 </head>
 
@@ -20,13 +20,13 @@
     <a class="navbar-brand" href="{% url 'polls:index' %}">TOP</a>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-            <a class="nav-link" href="#">解いた問題一覧</a>
+            <a class="nav-link" href="{% url 'polls:score' %}">問題解答一覧</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">入門の方へ</a>
+            <a class="nav-link" href="{% static 'polls/nyumon.html' %}">入門の方へ</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">寄付について</a>
+            <a class="nav-link" href="{% static 'polls/kihu.html' %}">寄付について</a>
         </li>
     </ul>
 
